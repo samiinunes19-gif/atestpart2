@@ -1,0 +1,9 @@
+{
+  "name": "atestadomed",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AtestadoMed — site e integração de pagamento PIX (MasterPag)",
+  "engines": {
+    "node": ">=18"
+  }
+}
