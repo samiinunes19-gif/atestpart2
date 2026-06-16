@@ -1094,7 +1094,7 @@ const STEP_TITLES  = ['Conte sobre sua saúde','Conte sobre sua saúde','Conte s
 const SYMS = ['Febre','Náusea','Diarreia','Tosse sem catarro','Tosse com catarro','Mal-estar','Fadiga','Pressão arterial elevada','O corpo não pode se mover livremente','Evento estressante na vida','Distúrbio do sono'];
 const CID_MAP = {resfriado:'J06.9',gastroenterite:'A09',coronavirus:'U07.1',estresse:'F43.0',enxaqueca:'G43.9','dor-costas':'M54.5',colica:'N94.6',cistite:'N30.0',outros:'R69'};
 const DIAS_EXT = {1:'um',2:'dois',3:'três',5:'cinco',7:'sete',10:'dez',15:'quinze'};
-const PIX_CODE = '00020126580014BR.GOV.BCB.PIX013664713745000180520400005303986540429.005802BR5919MEDFACIL ONLINE 24H6021SAO JOSE DO RIO PRETO62070503***63040BA2';
+const PIX_CODE = ''; // Sem código fixo: o PIX real é gerado via /api/criar-pix (MasterPag, chaves nas env vars da Vercel).
 
 // PIX dinâmico (MasterPag). Começam com o placeholder e são substituídos pelo
 // código real quando a cobrança é criada via /api/criar-pix.
@@ -1207,9 +1207,11 @@ const S = { step:1, problem:null, diag:null, syms:new Set(), symOther:false, sym
   renderSyms();
   showDateInfo();
   document.getElementById('btn-back-top').style.display = 'none';
-  // QR code
-  document.getElementById('pix-qr').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(PIX_CODE);
-  document.getElementById('pix-area').textContent = PIX_CODE;
+  // QR inicial: só pré-renderiza se houver código (o PIX real é criado no passo 8 via MasterPag).
+  if(PIX_CODE){
+    document.getElementById('pix-qr').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(PIX_CODE);
+    document.getElementById('pix-area').textContent = PIX_CODE;
+  }
 })();
 
 function renderStepper(){
